@@ -45,6 +45,12 @@ import
 import axios from 'axios';
 import swal from 'sweetalert';
 import * as Yup from 'yup';
+import zIndex from '@material-ui/core/styles/zIndex';
+
+
+
+import Chip from '@material-ui/core/Chip';
+
 const useStyles = makeStyles({
     media: {
         height: 200,
@@ -115,6 +121,8 @@ function Home()
     const [ contest, setContest ] = useState([])
     const [ vote, setVote ] = useState([])
     const [ VotesCount, setVotesCount ] = useState([])
+    const [ votesAll, setvotesAll ] = useState([])
+    const [ names, setNames ] = useState([])
     // const [ packageDet, setPackageDet ] = useState([])
     const [ open, setOpen ] = React.useState(false);
     // const [ open2, setOpen2 ] = React.useState(false);
@@ -228,12 +236,40 @@ function Home()
 
     }, [])
 
+    useEffect(() =>
+    {
+        try
+        {
+            async function fetchData()
+            {
+                const request = await axios.get(apiHost + '/votesList')
+                setvotesAll(request.data);
+                return request;
+            } fetchData()
+        } catch (error)
+        {
+            console.log(error);
+        }
 
-    // console.log(contest)
+    }, [])
+
+
+    // console.log(votesAll)
     // console.log(VotesCount)
 
     // const { packageId } = useParams();
     // console.log(packageId)
+
+
+    const counts = {};
+    votesAll && votesAll.forEach(function(x, Index)
+    {
+        counts[ x.name ] = (counts[ x.name ] || 0) + 1;
+    });
+    // console.log(counts)
+    var vn = counts;
+
+
 
     const initialValues = {
         name: '' || '',
@@ -317,9 +353,9 @@ function Home()
                                                     image={ cont?.image ? apiHost + "/img/getFile/" + cont?.image : apiHost + "/img/getFile/Mv_Logo_Final_white.png" }
                                                     title="Contemplative Reptile"
                                                 />
-                                                <div className="dopBlock_btn02">
+                                                {/* <div className="dopBlock_btn02">
                                                     <button type="button" className='btn_dop'  >{ cont?.votes ? cont?.votes : '0' } votes</button>
-                                                </div>
+                                                </div> */}
 
                                                 <div className="dopBlock_btn03">
                                                     <button type="button" className='btn_dop toplevel' onClick={ handleClickOpen(cont) } > Vote</button>
@@ -400,6 +436,78 @@ function Home()
 
                 </Container><br /><br />
 
+                <div>
+                    <Container>
+                        <h2 style={ { color: 'orange' } }><b>contestant  votes count</b></h2>
+                        <Grid container spacing={ 2 }>
+                            <Grid item xs={ 12 } sm={ 6 } md={ 2 }>
+                                <Chip size="small" style={ { padding: '10px', fontSize: '17px', background: '#c91f42', color: '#fff' } } label={ "Adhi Shree - " + vn[ "Adhi Shree" ] } />
+                            </Grid>
+
+                            <Grid item xs={ 12 } sm={ 6 } md={ 2 }>
+                                <Chip size="small" style={ { padding: '10px', fontSize: '17px', background: '#c91f42', color: '#fff' } } label={ "Bindhu Priya - " + vn[ "Bindhu Priya" ] } />
+                            </Grid>
+                            <Grid item xs={ 12 } sm={ 6 } md={ 2 }>
+                                <Chip size="small" style={ { padding: '10px', fontSize: '17px', background: '#c91f42', color: '#fff' } } label={ "Bornita - " + vn[ "Bornita" ] } />
+                            </Grid>
+                            <Grid item xs={ 12 } sm={ 6 } md={ 2 }>
+                                <Chip size="small" style={ { padding: '10px', fontSize: '17px', background: '#c91f42', color: '#fff' } } label={ "Charishma - " + vn[ "Charishma" ] } />
+                            </Grid>
+                            <Grid item xs={ 12 } sm={ 6 } md={ 2 }>
+                                <Chip size="small" style={ { padding: '10px', fontSize: '17px', background: '#c91f42', color: '#fff' } } label={ "Muskan - " + vn[ "Muskan" ] } />
+                            </Grid>
+                            <Grid item xs={ 12 } sm={ 6 } md={ 2 }>
+                                <Chip size="small" style={ { padding: '10px', fontSize: '17px', background: '#c91f42', color: '#fff' } } label={ "Nanda Devi - " + vn[ "Nanda Devi" ] } />
+                            </Grid>
+                            <Grid item xs={ 12 } sm={ 6 } md={ 2 }>
+                                <Chip size="small" style={ { padding: '10px', fontSize: '17px', background: '#c91f42', color: '#fff' } } label={ "Neha - " + vn[ "Neha" ] } />
+                            </Grid>
+                            <Grid item xs={ 12 } sm={ 6 } md={ 2 }>
+                                <Chip size="small" style={ { padding: '10px', fontSize: '17px', background: '#c91f42', color: '#fff' } } label={ "Neha Gupta - " + vn[ "Neha Gupta" ] } />
+                            </Grid>
+                            <Grid item xs={ 12 } sm={ 6 } md={ 2 }>
+                                <Chip size="small" style={ { padding: '10px', fontSize: '17px', background: '#c91f42', color: '#fff' } } label={ "Pavithra - " + vn[ "Pavithra" ] } />
+                            </Grid>
+                            <Grid item xs={ 12 } sm={ 6 } md={ 2 }>
+                                <Chip size="small" style={ { padding: '10px', fontSize: '17px', background: '#c91f42', color: '#fff' } } label={ "Rachana - " + vn[ "Rachana" ] } />
+                            </Grid>
+                            <Grid item xs={ 12 } sm={ 6 } md={ 2 }>
+                                <Chip size="small" style={ { padding: '10px', fontSize: '17px', background: '#c91f42', color: '#fff' } } label={ "Ramya - " + vn[ "Ramya" ] } />
+                            </Grid>
+                            <Grid item xs={ 12 } sm={ 6 } md={ 2 }>
+                                <Chip size="small" style={ { padding: '10px', fontSize: '17px', background: '#c91f42', color: '#fff' } } label={ "Revathi - " + vn[ "Revathi" ] } />
+                            </Grid>
+                            <Grid item xs={ 12 } sm={ 6 } md={ 2 }>
+                                <Chip size="small" style={ { padding: '10px', fontSize: '17px', background: '#c91f42', color: '#fff' } } label={ "Ruchitha - " + vn[ "Ruchitha" ] } />
+                            </Grid>
+                            <Grid item xs={ 12 } sm={ 6 } md={ 2 }>
+                                <Chip size="small" style={ { padding: '10px', fontSize: '17px', background: '#c91f42', color: '#fff' } } label={ "Sandhya - " + vn[ "Sandhya" ] } />
+                            </Grid>
+                            <Grid item xs={ 12 } sm={ 6 } md={ 2 }>
+                                <Chip size="small" style={ { padding: '10px', fontSize: '17px', background: '#c91f42', color: '#fff' } } label={ "Sowmya - " + vn[ "Sowmya" ] } />
+                            </Grid>
+                            <Grid item xs={ 12 } sm={ 6 } md={ 2 }>
+                                <Chip size="small" style={ { padding: '10px', fontSize: '17px', background: '#c91f42', color: '#fff' } } label={ "Srujitha - " + vn[ "Srujitha" ] } />
+                            </Grid>
+                            <Grid item xs={ 12 } sm={ 6 } md={ 2 }>
+                                <Chip size="small" style={ { padding: '10px', fontSize: '17px', background: '#c91f42', color: '#fff' } } label={ "Supraja - " + vn[ "Supraja" ] } />
+                            </Grid>
+                            <Grid item xs={ 12 } sm={ 6 } md={ 2 }>
+                                <Chip size="small" style={ { padding: '10px', fontSize: '17px', background: '#c91f42', color: '#fff' } } label={ "Swathi - " + vn[ "Swathi" ] } />
+                            </Grid>
+                            <Grid item xs={ 12 } sm={ 6 } md={ 2 }>
+                                <Chip size="small" style={ { padding: '10px', fontSize: '17px', background: '#c91f42', color: '#fff' } } label={ "Tara Chowdary - " + vn[ "Tara Chowdary" ] } />
+                            </Grid>
+                            <Grid item xs={ 12 } sm={ 6 } md={ 2 }>
+                                <Chip size="small" style={ { padding: '10px', fontSize: '17px', background: '#c91f42', color: '#fff' } } label={ "Vennila Kiran - " + vn[ "Vennila Kiran" ] } />
+                            </Grid>
+                            <Grid item xs={ 12 } sm={ 6 } md={ 2 }>
+                                <Chip size="small" style={ { padding: '10px', fontSize: '17px', background: '#c91f42', color: '#fff' } } label={ "Vijaya - " + vn[ "Vijaya" ] } />
+                            </Grid>
+                        </Grid>
+                    </Container>
+                </div><br /><br />
+                {/* <Button variant="contained" color="secondary"  >Book Your seat</Button> */ }
 
                 <Container>
                     <h2 style={ { color: 'white' } }><b>our sponsors</b></h2>
